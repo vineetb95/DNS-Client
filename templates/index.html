@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Eventually by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{url_for('static', filename='assets/css/main.css')}}"/>
+			
+		<style>
+
+		#table1{
+			margin:auto;
+			width:80%;
+		}
+
+			@media screen and (max-width: 480px) {
+				#lookup {
+					padding: 0 8px;
+				}
+			}
+
+			@media screen and (max-width: 720px){
+				#table1{
+					width:90vw;
+					/* margin:auto 10px; */
+				}
+			}
+		
+
+		.out{
+			background-color: rgba(11, 12, 14, 0.409);
+			height:400px;
+			overflow-y:scroll;
+			border-radius: 2px;
+		}
+
+		.out li{
+			padding-left: 10px;
+		}
+
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		.out::-webkit-scrollbar {
+  			display: none;
+		}
+
+		/* Hide scrollbar for IE, Edge and Firefox */
+		.out {
+		-ms-overflow-style: none;  /* IE and Edge */
+		scrollbar-width: none;  /* Firefox */
+		}
+
+		/* alert message */
+		/* #hideMe {
+    -webkit-animation: cssAnimation 2s forwards; 
+    animation: cssAnimation 2s forwards;
+}
+@keyframes cssAnimation {
+    0%   {opacity: 0;}
+	30%  {opacity:0.2;}
+	50%  {opacity:0.5;}
+	80%  {opacity:0.8;}
+    90%  {opacity: 0.9;}
+    100% {opacity: 0;}
+}
+@-webkit-keyframes cssAnimation {
+    0%   {opacity: 0;}
+	30%  {opacity:0.2;}
+	50%  {opacity:0.5;}
+	80%  {opacity:0.8;}
+    90%  {opacity: 0.9;}
+    100% {opacity: 0;}
+} */
+
+		</style>
+	</head>
+	<body id="nav" class="is-preload" style="position:relative;height:100vh;">
+
+		<!-- Header -->
+			<header id="header" style="padding-top: 300px;">
+				<h1>DNS LOOKUP</h1>
+				<p>A simple tool to search for DNS records for a domain name.<br>Using
+				<a href="https://pypi.org/project/dnspython/">DNSpython package</a>.</p>
+			</header>
+
+
+			<div class="top">
+				<form method="GET" action="/search">
+					<input style="margin:8px 0;" type="text" name="hostname" placeholder="DomainName" value="{{params[0]}}"/>
+					<div style="display:flex; justify-content: space around;">
+						<input style="margin:8px 0" type="text" name="server" placeholder="Server" value="{{params[1]}}"/>
+						<input style="margin:8px 0" type="text" name="port" placeholder="PortNo." value="{{port}}"/>
+						<input style="margin:8px 0" type="text" name="timeout" placeholder="Timeout" value="{{timeout}}"/>
+					</div>
+					<br>
+					<input type="radio" id="A" name="query_type" value="A" {{params[2][0]}}> <label for="A">A</label>
+					
+					<input type="radio" id="AAAA" name="query_type" value="AAAA" {{params[2][1]}}> <label for="AAAA" {{params[2][1]}}>AAAA</label>
+					
+					<input type="radio" id="MX" name="query_type" value="MX" {{params[2][2]}}> <label for="MX">MX</label>   
+					
+					<input type="radio" id="ANY" name="query_type" value="ANY" {{params[2][3]}}> <label for="ANY">ANY</label>   
+					
+					<input type="radio" id="CNAME" name="query_type" value="CNAME" {{params[2][4]}}> <label for="CNAME">CNAME</label>       
+			
+					<input type="radio" id="CAA" name="query_type" value="CAA" {{params[2][5]}}> <label for="CAA">CAA</label>       
+			
+					<input type="radio" id="NS" name="query_type" value="NS" {{params[2][6]}}> <label for="NS">NS</label>
+					
+					<input type="radio" id="PTR" name="query_type" value="PTR" {{params[2][7]}}> <label for="PTR">PTR</label> 
+					
+					<input type="radio" id="SOA" name="query_type" value="SOA" {{params[2][8]}}> <label for="SOA">SOA</label>    
+					
+					<input type="radio" id="SRV" name="query_type" value="SRV" {{params[2][9]}}> <label for="SRV">SRV</label> 
+					
+					<input type="radio" id="TXT" name="query_type" value="TXT" {{params[2][10]}}> <label for="TXT">TXT</label>  
+					<br>
+			
+					<input type="checkbox" id="rd" name="rd" value="on" {{params[3]}}> <label for="rd">RecursionDesired</label>
+
+					
+					<input id="lookup" type="submit" value="LOOKUP">
+				</form>
+			</div>
+			<div id="table1" style="height: auto;">
+				
+					{{answer}}
+				
+			</div>
+
+			{%if reError%}
+			<div id="hideMe" style="position:absolute;width:80%px;top:10%; z-index: 3;background-color: rgba(139, 88, 91, 0.507);margin:auto;padding: 20px;border-radius: 2px;">
+
+				Something went wrong! Please try again.
+
+			</div>
+			{%endif%}
+
+
+
+			<script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+			<style>
+
+			</style>
+
+			
+	</body>
+</html>
