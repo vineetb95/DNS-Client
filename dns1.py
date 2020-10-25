@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, render_template, url_for, Markup, redirect
+from flask import Flask, request, render_template, url_for, Markup, redirect, jsonify
 import dns.message
 import dns.query
 import dns.flags
-
+from dns_query_json import json_query
 # function to create a table row with elements in lis, id clasi and width =size
 
 
@@ -72,7 +72,7 @@ def my_dns_query(hostname, query_type, recrusion_desire, server, portNo, tk=2):
 
     query_response = dns.query.udp(
         query, server, port=int(portNo), timeout=int(tk))
-    print(query_response)
+    print((query_response.__dict__))
 
     return make_table(query_response)
 
@@ -100,6 +100,7 @@ def search():
         query_type = request.args.get('query_type')
         recrusion_desire = request.args.get('rd')
         portNo = request.args.get('port')
+        returnJson = request.args.get('returnJson')
         if(portNo == ""):
             portNo = "53"
         tk = request.args.get('timeout')
@@ -121,7 +122,9 @@ def search():
             rd1 = "checked"
         else:
             rd1 = ""
-
+        #Return json object if desired
+        if (returnJson == "true"):
+            return (jsonify(json_query(hostname, query_type, rd, server, portNo, tk)))
         # Markup function convert text to html so it can be used in jinja as html not as text
         return render_template("index.html", params=[hostname, server, send_list, rd1], answer=Markup(my_dns_query(hostname, query_type, rd, server, portNo, tk)), port=portNo, timeout=tk)
 
