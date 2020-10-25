@@ -8,13 +8,15 @@ import dns.flags
 
 
 def make_row(lis, clasi, size=90):
-    stri = "<div class='row' title='"+clasi+"' style='width:" + \
+    stri = "<div class='row' style='width:" + \
         str(size)+"%; display: flex;justify-content: space-between;border-collapse: collapse;'>\n"
     for k in lis:
         if k != None:
             k = "<br><br>".join(k.splitlines())
-        stri = stri+"<div class='cell' style='padding:3px 0;width: 100%;text-align:center;  float:left;border:1px solid white;'>" + \
+        stri = stri+"<div class='cell' style='padding:3px 0;width: 100%;text-align:center;  float:left;border-left:1px solid white;border-top:1px solid white;border-bottom:1px solid white;'>" + \
             str(k)+"</div>\n"
+
+    stri = stri+"<div data-title='"+clasi+"' class='info' style='padding:3px 6px 3px 0;border-right:1px solid white;border-top:1px solid white;border-bottom:1px solid white;'><i class='fa fa-info-circle' style='font-size:24px'></i></div>"
     stri = stri+"</div>\n"
 
     return stri
